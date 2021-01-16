@@ -1,21 +1,36 @@
 
+import data.DigitalSignature;
+import exceptions.NullSignatureException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class DataDigitalSignatureTest {
 
-    @BeforeEach
-    void setUp() {
+    DigitalSignature digitalSignature;
 
+    @BeforeEach
+    void setUp() throws NullSignatureException {
+
+        digitalSignature = new DigitalSignature(new byte[]{(byte) 0xd4,(byte)  0x5e});
     }
 
     @Test
-    void initRevision() {
+    public void addTestNullProductIDException() {
+
+        Assertions.assertThrows(NullSignatureException.class, () -> digitalSignature= new DigitalSignature(new byte[]{}));
+    }
+
+    @Test
+    public void addTestGetDigitalSignatureCode() {
+
+        Assertions.assertArrayEquals(digitalSignature.getDigitalSignatureCode(),new byte[]{(byte) 0xd4,(byte)  0x5e} );
 
     }
+
+
 
 }
 
