@@ -17,20 +17,24 @@ public class DigitalSignature {
         this.signature = s;
     }
 
+    public byte[] getDigitalSignatureCode() {
+        return signature;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DigitalSignature dSignature = (DigitalSignature) o;
-        return signature.equals(dSignature);
+        return  Arrays.equals(signature, dSignature.signature);
     }
 
     public int hashCode() {
-        return signature.hashCode();
+
+        return Arrays.hashCode(signature);
     }
 
     public String toString() {
         return "HealthCardID{" + "personal code='" + Arrays.toString(signature) + '\'' + '}';
     }
-
 
 }
