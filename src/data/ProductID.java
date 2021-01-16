@@ -9,13 +9,17 @@ public class ProductID {
 
     public ProductID(String code) throws NullProductIDException, InvalidProductIDException {
 
+        errorIDControl(code);
+
+        this.UPC = code;
+    }
+
+    public void errorIDControl(String code) throws NullProductIDException, InvalidProductIDException {
         if (code.equals(""))
             throw new NullProductIDException("Empty code");
 
         if (!code.matches("[0-9]+") || code.length() != 12)
             throw new InvalidProductIDException("Invalid code");
-
-        this.UPC = code;
     }
 
     @Override
@@ -31,6 +35,10 @@ public class ProductID {
     }
 
     public String toString() {
-        return "HealthCardID{" + "personal code='" + UPC + '\'' + '}';
+        return "ProductID{" + "product code='" + UPC + '\'' + '}';
+    }
+
+    public String getUPC() {
+        return this.UPC;
     }
 }
