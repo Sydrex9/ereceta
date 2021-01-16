@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="280ca22c-df41-470d-b96a-24c4c7573b51" name="Default Changelist" comment="Create Branch">
-      <change afterPath="$PROJECT_DIR$/src/exceptions/InvalidHealthCardIDException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exceptions/NullHealthCardIDException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/InvalidProductIDException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/NullProductIDException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/NullSignatureException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/HealthCardID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/HealthCardID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/DigitalSignature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DigitalSignature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/ProductID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/ProductID.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
