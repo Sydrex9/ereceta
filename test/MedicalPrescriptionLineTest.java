@@ -5,7 +5,6 @@ import medicalconsultation.FqUnit;
 import medicalconsultation.MedicalPrescriptionLine;
 import medicalconsultation.TakingGuideline;
 import medicalconsultation.dayMoment;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
