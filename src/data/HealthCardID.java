@@ -1,12 +1,23 @@
 package data;
 
+import exceptions.InvalidHealthCardIDException;
+import exceptions.NullHealthCardIDException;
+
 final public class HealthCardID {
 
     private final String personalID;
 
-    public HealthCardID(String code) {
+    public HealthCardID(String code) throws NullHealthCardIDException, InvalidHealthCardIDException {
+        if(code.equals(""))
+            throw new NullHealthCardIDException("Empty code");
+
+        if (!code.matches("[0-9]+") || code.length() != 12)
+            throw new InvalidHealthCardIDException("Invalid code");
+
         this.personalID = code;
     }
+
+
     public String getPersonalID() {
         return personalID;
     }
