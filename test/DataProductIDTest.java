@@ -31,7 +31,7 @@ public class DataProductIDTest {
     }
 
     @Test
-    public void addTestValid() {
+    public void getUPCTestValid() {
 
         Assertions.assertEquals(productID.getUPC(), "123456789257");
 
