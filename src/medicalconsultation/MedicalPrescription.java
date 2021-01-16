@@ -36,12 +36,12 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         mpl.add(new MedicalPrescriptionLine(prodID, new TakingGuideline(dayMoment.valueOf(instruc[0]), Float.valueOf(instruc[1]), instruc[2], Float.valueOf(instruc[3]), Float.valueOf(instruc[4]), FqUnit.valueOf(instruc[5]))));
         prodPresc.add(prodID);
     }
-    public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
+    public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException, InvalidProductIDException, NullProductIDException {
         if(!prodPresc.contains(prodID)) throw new ProductNotInPrescription("Product not in prescription.");
         if(instruc.length!=6)throw new IncorrectTakingGuidelinesException("Not valid Taking Guideline: instruction has more or less information.");
 
         for(int x = 0; x<= mpl.size(); x++){
-            //modifify = new ProductID(mpl.get(x).getProduct().getUPC());
+            modifify = new ProductID(mpl.get(x).getProduct().getUPC());
 
             if(prodID.equals(modifify)){
                 mpl.get(x).setInstructions(new TakingGuideline(dayMoment.valueOf(instruc[0]), Float.valueOf(instruc[1]), instruc[2], Float.valueOf(instruc[3]), Float.valueOf(instruc[4]), FqUnit.valueOf(instruc[5])));
