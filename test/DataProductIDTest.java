@@ -1,9 +1,10 @@
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PosologyTest {
+public class DataProductIDTest {
 
     @BeforeEach
     void setUp() {
@@ -11,7 +12,9 @@ class PosologyTest {
     }
 
     @Test
-    void Posology() {
+    void initRevision() {
 
     }
+
 }
+
