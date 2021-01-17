@@ -12,12 +12,13 @@ import org.junit.jupiter.api.Test;
 
 public class HealthCardIDTest {
 
-    HealthCardID healthCardID;
+    HealthCardID healthCardID, healthCardID2;
 
     @BeforeEach
     void setUp() throws NullHealthCardIDException, InvalidHealthCardIDException {
 
         healthCardID = new HealthCardID(("123456789641"));
+        healthCardID2 = new HealthCardID(("123456789641"));
 
     }
 
@@ -37,5 +38,23 @@ public class HealthCardIDTest {
         Assertions.assertEquals(healthCardID.getPersonalID(), "123456789641");
 
     }
+
+    @Test
+    public void hashCodeTest() {
+
+        Assertions.assertEquals(healthCardID.hashCode(), healthCardID2.hashCode());
+
+    }
+
+    @Test
+    public void toStringTest() {
+
+        Assertions.assertEquals("HealthCardID{" + "personal code='123456789641'}", healthCardID.toString());
+
+    }
+
+
+
+
 }
 

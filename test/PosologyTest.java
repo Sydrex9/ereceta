@@ -37,4 +37,5 @@ class PosologyTest
         assertEquals(3.0f, posology.getFreq());
         assertEquals(FqUnit.DAY, posology.getFreqUnit());
     }
+
 }

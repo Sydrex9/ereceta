@@ -35,6 +35,6 @@ final public class HealthCardID {
     }
     @Override
     public String toString() {
-        return "HealthCardID{" + "personal code='" + personalID + '\'' + '}';
+        return "HealthCardID{" + "personal code='" + personalID + "'}";
     }
 }

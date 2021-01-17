@@ -26,8 +26,8 @@ public class ProductID {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductID pID = (ProductID) o;
-        return UPC.equals(pID);
+        ProductID prodID = (ProductID) o;
+        return UPC.equals(prodID.UPC);
     }
 
     public int hashCode() {
@@ -35,7 +35,7 @@ public class ProductID {
     }
 
     public String toString() {
-        return "ProductID{" + "product code='" + UPC + '\'' + '}';
+        return "ProductID{" + "product code='" + UPC + "'}";
     }
 
     public String getUPC() {
