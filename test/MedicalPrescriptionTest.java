@@ -6,9 +6,6 @@ import medicalconsultation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import java.util.HashMap;
@@ -77,7 +74,7 @@ class MedicalPrescriptionTest {
     }
 
     @Test
-    void addLine() throws IncorrectTakingGuidelinesException {
+    void addLineTest() throws IncorrectTakingGuidelinesException {
         medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
 
         assertEquals(prodID1, medicalPres.getPrescriptionLines().get(prodID1).getProduct());
@@ -90,12 +87,12 @@ class MedicalPrescriptionTest {
     }
 
     @Test
-    void modifyLine() {
+    void modifyLineTest() {
 
     }
 
     @Test
-    void removeLine() {
+    void removeLineTest() {
 
     }
 }
