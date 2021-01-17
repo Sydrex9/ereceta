@@ -7,8 +7,8 @@ public class MedicalPrescriptionLine {
     private TakingGuideline instructions;
 
     public MedicalPrescriptionLine(ProductID product,TakingGuideline line){
-        this.product=product;
-        this.instructions= line;
+        this.product = product;
+        this.instructions = line;
     }
 
     public TakingGuideline getInstructions() {
