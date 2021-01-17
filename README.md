@@ -1,3 +1,3 @@
-# Título del Proyecto
+# Pràctica 4: Testing unitari en Java
 
-_Acá va un párrafo que describa lo que es el proyecto_
+Enginyeria del Programari, 2020-2021
