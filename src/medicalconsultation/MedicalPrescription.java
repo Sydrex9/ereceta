@@ -50,17 +50,9 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         }
     }
     public void removeLine(ProductID prodID) throws ProductNotInPrescription {
-        if(!mpl.containsKey(prodID))throw new ProductNotInPrescription("Product not in prescription.");
-        Set<ProductID> key_mpl = mpl.keySet();
-        Iterator<ProductID> itProdID = key_mpl.iterator();
+        if(!mpl.containsKey(prodID)) throw new ProductNotInPrescription("Product not in prescription.");
+        mpl.remove(prodID);
 
-        while(itProdID.hasNext()){
-            ProductID next_mpl = itProdID.next();
-            if(prodID.equals(next_mpl)) {
-                mpl.remove(next_mpl);
-                break;
-            }
-        }
     }
 
 
