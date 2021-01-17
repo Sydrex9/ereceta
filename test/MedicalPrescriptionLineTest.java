@@ -14,7 +14,7 @@ class MedicalPrescriptionLineTest {
 
     private ProductID product;
     private TakingGuideline lineTest;
-    private MedicalPrescriptionLine medicalLineTest;
+    private MedicalPrescriptionLine medicalLineTest, medicalLineTest2;
 
 
     @BeforeEach
@@ -22,6 +22,9 @@ class MedicalPrescriptionLineTest {
 
         product=new ProductID("123456789257");
         lineTest= new TakingGuideline(dayMoment.AFTERMEALS,1,"Despues de cada comida",3,1,FqUnit.DAY);
+
+
+
     }
 
     @Test
@@ -40,5 +43,30 @@ class MedicalPrescriptionLineTest {
 
 
     }
+
+    @Test
+    public void equalsTest() {
+
+        medicalLineTest=new MedicalPrescriptionLine(product,lineTest);
+
+        medicalLineTest2=new MedicalPrescriptionLine(product,lineTest);
+
+        assertEquals(true, medicalLineTest.equals(medicalLineTest2));
+
+
+    }
+
+    @Test
+    public void setProductTest() {
+
+        medicalLineTest=new MedicalPrescriptionLine(product,lineTest);
+
+        medicalLineTest.setProduct(product);
+
+        assertEquals(product, medicalLineTest.getProduct());
+
+
+    }
+
 }
 

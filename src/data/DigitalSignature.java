@@ -34,7 +34,7 @@ public class DigitalSignature {
     }
 
     public String toString() {
-        return "HealthCardID{" + "personal code='" + Arrays.toString(signature) + '\'' + '}';
+        return "DigitalSignature{" + "signature code='" + Arrays.toString(signature) + "'}";
     }
 
 }
