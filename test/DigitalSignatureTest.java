@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 
 
-public class DataDigitalSignatureTest {
+public class DigitalSignatureTest {
 
     DigitalSignature digitalSignature;
 
