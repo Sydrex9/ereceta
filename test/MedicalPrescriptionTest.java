@@ -23,6 +23,8 @@ class MedicalPrescriptionTest {
     private ProductID prodID1, prodID2, prodID3;
     private TakingGuideline tgl;
     private MedicalPrescriptionLine mpl1, mpl2, mpl3;
+    private HashMap<ProductID, MedicalPrescriptionLine> p_mpl_hash = new HashMap<>();
+    private MedicalPrescription mp;
 
     @BeforeEach
     void setUp() throws NullHealthCardIDException, InvalidHealthCardIDException, NullSignatureException, InvalidProductIDException, NullProductIDException {
@@ -39,6 +41,10 @@ class MedicalPrescriptionTest {
         mpl1 = new MedicalPrescriptionLine(prodID1, tgl);
         mpl2 = new MedicalPrescriptionLine(prodID2, tgl);
         mpl3 = new MedicalPrescriptionLine(prodID3, tgl);
+
+
+
+        p_mpl_hash.put(prodID1, mpl1);
 
     }
 
@@ -71,8 +77,16 @@ class MedicalPrescriptionTest {
     }
 
     @Test
-    void addLine() {
+    void addLine() throws IncorrectTakingGuidelinesException {
+        medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
 
+        assertEquals(prodID1, medicalPres.getPrescriptionLines().get(prodID1).getProduct());
+        assertEquals(dayMoment.AFTERBREAKFAST, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getdMoment());
+        assertEquals(2.34f, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getDuration());
+        assertEquals("Take 3 times a day", medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getInstructions());
+        assertEquals(0.11f, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getDose());
+        assertEquals(0.50f, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getFreq());
+        assertEquals(FqUnit.DAY, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getFreqUnit());
     }
 
     @Test

@@ -46,4 +46,12 @@ public class TakingGuideline { // Represents the taking guidelines of a medicine
         this.posology = posology;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TakingGuideline tg = (TakingGuideline) o;
+        return this.dMoment == tg.dMoment && this.duration == tg.duration && this.instructions.equals(tg.instructions) && this.posology.equals(tg.posology);
+    }
+
 }
