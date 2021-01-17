@@ -28,11 +28,11 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         mpl = new HashMap<>();
     } // Makes some inicialization
 
-    public void addLine(ProductID prodID, String[] instruc) throws IncorrectTakingGuidelinesException {
+    public void addLine(ProductID prodID, String[] instruc) throws IncorrectTakingGuidelinesException{
         if(instruc.length!=6) throw new IncorrectTakingGuidelinesException("Not valid Taking Guideline: instruction has more or less information.");
         mpl.put(prodID, new MedicalPrescriptionLine(prodID, new TakingGuideline(dayMoment.valueOf(instruc[0]), Float.valueOf(instruc[1]), instruc[2], Float.valueOf(instruc[3]), Float.valueOf(instruc[4]), FqUnit.valueOf(instruc[5]))));
     }
-    public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException, InvalidProductIDException, NullProductIDException {
+    public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
         Set<ProductID> key_mpl = mpl.keySet();
         Iterator<ProductID> itProdID = key_mpl.iterator();
         if(!mpl.containsKey(prodID)) throw new ProductNotInPrescription("Product not in prescription.");

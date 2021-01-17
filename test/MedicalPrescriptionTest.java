@@ -17,14 +17,14 @@ class MedicalPrescriptionTest {
     private MedicalPrescription medicalPres;
     private HealthCardID hcID;
     private DigitalSignature eSign;
-    private ProductID prodID1, prodID2, prodID3;
+    private ProductID prodID1, prodID2, prodID3, prodID_error;
     private TakingGuideline tgl;
     private MedicalPrescriptionLine mpl1, mpl2, mpl3;
     private HashMap<ProductID, MedicalPrescriptionLine> p_mpl_hash = new HashMap<>();
     private MedicalPrescription mp;
 
     @BeforeEach
-    void setUp() throws NullHealthCardIDException, InvalidHealthCardIDException, NullSignatureException, InvalidProductIDException, NullProductIDException {
+    void setUp() throws NullHealthCardIDException, InvalidHealthCardIDException, NullSignatureException, InvalidProductIDException, NullProductIDException, IncorrectTakingGuidelinesException {
 
         hcID = new HealthCardID("123456789123");
         eSign = new DigitalSignature(new byte[]{ (byte)0xe0, 0x4f, (byte)0xd0, 0x20, (byte)0xea, 0x3a, 0x69, 0x10});
@@ -39,7 +39,9 @@ class MedicalPrescriptionTest {
         mpl2 = new MedicalPrescriptionLine(prodID2, tgl);
         mpl3 = new MedicalPrescriptionLine(prodID3, tgl);
 
+        mp = new MedicalPrescription(1111, new Date(2021, 1, 5), new Date(2021, 11, 23), hcID, eSign);
 
+        mp.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
 
         p_mpl_hash.put(prodID1, mpl1);
 
@@ -52,7 +54,7 @@ class MedicalPrescriptionTest {
         assertEquals(new Date(2021, 11, 23), medicalPres.getEndDate());
         assertEquals(hcID, medicalPres.getHcID());
         assertEquals(eSign, medicalPres.geteSign());
-        //assertEquals(lines, medicalPres.getLines());
+        assertEquals(prodID1, mp.getPrescriptionLines().get(prodID1).getProduct());
     }
 
     @Test
@@ -76,6 +78,8 @@ class MedicalPrescriptionTest {
     @Test
     void addLineTest() throws IncorrectTakingGuidelinesException {
         medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+        medicalPres.addLine(prodID_error, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+
 
         assertEquals(prodID1, medicalPres.getPrescriptionLines().get(prodID1).getProduct());
         assertEquals(dayMoment.AFTERBREAKFAST, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getdMoment());
@@ -84,15 +88,49 @@ class MedicalPrescriptionTest {
         assertEquals(0.11f, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getDose());
         assertEquals(0.50f, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getFreq());
         assertEquals(FqUnit.DAY, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getFreqUnit());
+
+        assertThrows(IncorrectTakingGuidelinesException.class, () -> {medicalPres.addLine(prodID1, new String[]{ "AFTERLUNCH", "2.34f", "Take 3 times a day", "0.11f", "0.50f"});});
+
+
     }
 
     @Test
-    void modifyLineTest() {
+    void modifyLineTest() throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
+
+        medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+        medicalPres.modifyLine(prodID1, new String[]{ "AFTERLUNCH", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+
+
+        assertEquals(dayMoment.AFTERLUNCH, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getdMoment());
+        assertNotEquals(FqUnit.HOUR, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getdMoment());
+
+        medicalPres.modifyLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "HOUR" });
+
+        assertEquals(FqUnit.HOUR, medicalPres.getPrescriptionLines().get(prodID1).getInstructions().getPosology().getFreqUnit());
+
+        medicalPres.removeLine(prodID1);
+
+        assertThrows(ProductNotInPrescription.class, () -> {medicalPres.modifyLine(prodID1, new String[]{ "AFTERLUNCH", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });});
+
+        medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+
+        assertThrows(IncorrectTakingGuidelinesException.class, () -> {medicalPres.modifyLine(prodID1, new String[]{ "AFTERLUNCH", "2.34f", "Take 3 times a day", "0.11f", "0.50f"});});
+
+
 
     }
 
     @Test
-    void removeLineTest() {
+    void removeLineTest() throws IncorrectTakingGuidelinesException, ProductNotInPrescription {
+
+        medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f", "DAY" });
+        medicalPres.removeLine(prodID1);
+
+        assertEquals(null, medicalPres.getPrescriptionLines().get(prodID1));
+
+        assertThrows(ProductNotInPrescription.class, () -> {medicalPres.removeLine(prodID1);});
+
+        assertThrows(IncorrectTakingGuidelinesException.class, () -> {medicalPres.addLine(prodID1, new String[]{ "AFTERBREAKFAST", "2.34f", "Take 3 times a day", "0.11f", "0.50f"});});
 
     }
 }
