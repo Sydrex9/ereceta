@@ -26,4 +26,13 @@ public class MedicalPrescriptionLine {
     public void setProduct(ProductID product) {
         this.product = product;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MedicalPrescriptionLine mpl = (MedicalPrescriptionLine) o;
+        return this.product.equals(mpl.product) && this.instructions.equals(mpl.instructions);
+    }
+
 }
