@@ -28,15 +28,6 @@ public class ConsultationTerminal{
         this.signature = ds;
     }
 
-    private DigitalSignature digitalSignature;
-    private HealthNationalService healthNationalService;
-    private ScheduledVisitAgenda scheduledVisitAgenda;
-
-
-    public ConsultationTerminal(DigitalSignature digitalSignature, HealthNationalService healthNationalService , ScheduledVisitAgenda scheduledVisitAgenda){
-
-    }
-
     public void initRevision() throws HealthCardException, NotValidePrescriptionException, ConnectException {
 
         if(visitAgenda.getHealthCardID() == null){
@@ -49,7 +40,12 @@ public class ConsultationTerminal{
             throw new NotValidePrescriptionException("Not valid prescription");
         }
 
-        this.prescription = hns.getePrescription(cip);
+        try{
+            this.prescription = hns.getePrescription(cip);
+        }catch(ConnectException e){
+            throw new ConnectException();
+        }
+
 
     }
     public void initPrescriptionEdition() throws AnyCurrentPrescriptionException, NotFinishedTreatmentException {
@@ -58,23 +54,31 @@ public class ConsultationTerminal{
             throw new AnyCurrentPrescriptionException("No prescription in course");
         }
         if(new Date().before(prescription.getEndDate())){
-            throw new AnyCurrentPrescriptionException("Not finished treatment");
+            throw new NotFinishedTreatmentException("Not finished treatment");
         }
     }
 
     public void searchForProducts(String keyWord) throws AnyKeyWordMedicineException, ConnectException {
 
-        if(hns.getProductsByKW(keyWord).isEmpty()) throw new AnyKeyWordMedicineException("No results for keyWord " + keyWord);
-        this.productsList = hns.getProductsByKW(keyWord);
+        if(hns.getProductsByKW(keyWord).isEmpty()) throw new AnyKeyWordMedicineException("No results for keyWord \"" + keyWord + "\"");
 
+        try{
+            this.productsList = hns.getProductsByKW(keyWord);
+        }catch(ConnectException e){
+            throw new ConnectException();
+        }
 
     }
 
     public void selectProduct(int option) throws AnyMedicineSearchException, ConnectException {
 
         if(productsList.isEmpty()) throw new AnyMedicineSearchException("No products in the list.");
-        this.specification = hns.getProductSpecific(option);
 
+        try{
+            this.specification = hns.getProductSpecific(option);
+        }catch(ConnectException e){
+            throw new ConnectException();
+        }
     }
 
     public void enterMedicineGuidelines(String[] instruc) throws AnySelectedMedicineException, IncorrectTakingGuidelinesException {
@@ -93,7 +97,7 @@ public class ConsultationTerminal{
         this.prescription.setEndDate(date);
     }
 
-    public void sendePrescription() throws ConnectException,NotValidePrescriptionException, eSignatureException, NotCompletedMedicalPrescription {
+    public void sendePrescription() throws ConnectException, NotValidePrescriptionException, eSignatureException, NotCompletedMedicalPrescription {
 
         if(this.signature.getDigitalSignatureCode().equals(null) || this.signature.getDigitalSignatureCode().length == 0 ) throw new eSignatureException("eSignature not correct.");
 
@@ -105,8 +109,11 @@ public class ConsultationTerminal{
                 || this.prescription.getHcID().equals(null) || this.prescription.geteSign().equals(null))
                 throw new NotCompletedMedicalPrescription("Not completed medical prescription failure");
 
-        //this.prescription = hns.sendePrescription(prescription);
-
+        try{
+            this.prescription = hns.sendePrescription(prescription);
+        }catch(ConnectException e){
+            throw new ConnectException();
+        }
     }
 
     public void printePresc() throws printingException {
