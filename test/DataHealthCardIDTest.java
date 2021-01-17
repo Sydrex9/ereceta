@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 
 public class DataHealthCardIDTest {
@@ -32,7 +32,7 @@ public class DataHealthCardIDTest {
     }
 
     @Test
-    public void addTestValid() {
+    public void addTestGetPersonalID() {
 
         Assertions.assertEquals(healthCardID.getPersonalID(), "123456789641");
 
